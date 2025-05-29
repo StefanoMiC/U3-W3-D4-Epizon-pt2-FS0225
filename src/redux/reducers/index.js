@@ -2,6 +2,8 @@
 // un reducer dev'essere una funzione PURA! che prenda lo STATO CORRENTE nel momento immediatamente succesivo alla dispatch con l'action inviata
 // e con la nuova informazione contenuta nell'action creerà SEMPRE un NUOVO STATO (senza incertezze o ambiguità)
 
+import { ADD_TO_CART, REMOVE_FROM_CART, SELECT_BOOK, SET_USER } from "../action";
+
 // OGNI VOLTA che verrà "risvegliato" (per via della chiamata di dispatch) leggerà dal suo secondo parametro la nostra action con il suo type (il type è obbligatorio che ci sia sempre)
 // oltre al type potrebbe esserci un payload dal quale derivare il nuovo dato da salvare con il quale si genererà il nuovo Stato dell'applicativo
 
@@ -40,7 +42,7 @@ const mainReducer = (state = initialState, action) => {
 
   // per fare ciò creeremo uno switch case con default che farà il return dello stato attuale (senza modifiche), in modo da rispettare le regole appena descritte
   switch (action.type) {
-    case "ADD_TO_CART":
+    case ADD_TO_CART:
       return {
         ...state,
         cart: {
@@ -52,7 +54,7 @@ const mainReducer = (state = initialState, action) => {
           content: [...state.cart.content, action.payload] // ✅
         }
       };
-    case "REMOVE_FROM_CART":
+    case REMOVE_FROM_CART:
       return {
         ...state,
         cart: {
@@ -68,7 +70,7 @@ const mainReducer = (state = initialState, action) => {
         }
       };
 
-    case "SELECT_BOOK":
+    case SELECT_BOOK:
       return {
         ...state,
         bookSelected: {
@@ -77,7 +79,7 @@ const mainReducer = (state = initialState, action) => {
         }
       };
 
-    case "SET_USER":
+    case SET_USER:
       return {
         ...state,
         user: {

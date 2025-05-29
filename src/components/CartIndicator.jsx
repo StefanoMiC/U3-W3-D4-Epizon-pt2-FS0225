@@ -3,6 +3,7 @@ import { Button, FormControl } from "react-bootstrap";
 import { FaShoppingCart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { SET_USER, setUserAction } from "../redux/action";
 
 const CartIndicator = () => {
   const [inputValue, setInputValue] = useState("");
@@ -39,7 +40,13 @@ const CartIndicator = () => {
               setInputValue(e.target.value);
             }}
           />
-          <Button className="flex-shrink-0" onClick={() => dispatch({ type: "SET_USER", payload: inputValue })}>
+          <Button
+            className="flex-shrink-0"
+            onClick={() => {
+              // dispatch({ type: SET_USER, payload: inputValue })
+              dispatch(setUserAction(inputValue));
+            }}
+          >
             Log In
           </Button>
         </div>

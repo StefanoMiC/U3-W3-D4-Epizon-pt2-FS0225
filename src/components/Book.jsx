@@ -2,6 +2,7 @@ import { Badge, Button, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FaCartPlus } from "react-icons/fa";
+import { ADD_TO_CART, addToCartAction, SELECT_BOOK, selectBookAction } from "../redux/action";
 
 const Book = ({ book }) => {
   const dispatch = useDispatch();
@@ -11,7 +12,8 @@ const Book = ({ book }) => {
     <Card
       className={bookSelected?.id === book.id ? "border-2 border-primary mt-3" : "border-2 mt-3"}
       onClick={() => {
-        dispatch({ type: "SELECT_BOOK", payload: book });
+        // dispatch({ type: SELECT_BOOK, payload: book });
+        dispatch(selectBookAction(book));
       }}
       style={{ cursor: "pointer" }}
     >
@@ -24,7 +26,14 @@ const Book = ({ book }) => {
               {book.price}€
             </Badge>
 
-            <Button variant="success" className="btn-sm" onClick={() => dispatch({ type: "ADD_TO_CART", payload: book })}>
+            <Button
+              variant="success"
+              className="btn-sm"
+              onClick={() => {
+                //  dispatch({ type: ADD_TO_CART, payload: book })
+                dispatch(addToCartAction(book));
+              }}
+            >
               <FaCartPlus />
             </Button>
           </div>

@@ -1,6 +1,7 @@
 import { Component } from "react";
-import { Button } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 import { connect } from "react-redux";
+import { ADD_TO_CART, SET_USER, setUserAction } from "../redux/action";
 // la funzione connect è una funzione di alto livello HOF - Higher Order Function, che connette il nostro Class Component allo Store
 // questa funzione vuole due parametri (mapStateToProps, mapDispatchToProps)
 
@@ -17,7 +18,8 @@ const mapStateToProps = state => {
   return {
     user: state.user.content,
     cartLength: state.cart.content.length,
-    bookSelected: state.bookSelected.content
+    bookSelected: state.bookSelected.content,
+    books: state.books.content
   };
 };
 
@@ -31,15 +33,17 @@ const mapDispatchToProps = dispatch => {
   // se avessimo bisogno di rendere più dinamico il payload sarebbe necessario definire la funzione nella prop con un parametro,
   // così da poter decidere, al momento della chiamata della prop che valore passarle
   return {
-    setUser: name => dispatch({ type: "SET_USER", payload: name }),
-    addToCart: book => dispatch({ type: "ADD_TO_CART", payload: book })
+    // setUser: name => dispatch({ type: SET_USER, payload: name }),
+    // addToCart: book => dispatch({ type: ADD_TO_CART, payload: book })
+    addToCart: book => dispatch(addToCartAction(book)),
+    setUser: name => dispatch(setUserAction(inputValue))
   };
 };
 
 class Footer extends Component {
   render() {
     // le prop user, cartLength, bookSelected sono state estratte dal mapStateToProps e applicate al componente dalla funzione connect
-    const { user, cartLength, bookSelected, setUser, addToCart } = this.props;
+    const { user, books, cartLength, bookSelected, setUser, addToCart } = this.props;
 
     return (
       <footer className="epizon-footer">
@@ -56,6 +60,11 @@ class Footer extends Component {
             Add To Cart
           </Button>
         )}
+        <ListGroup>
+          {books.map(book => (
+            <ListGroup.Item key={book.id}>{book.title}</ListGroup.Item>
+          ))}
+        </ListGroup>
       </footer>
     );
   }

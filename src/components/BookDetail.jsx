@@ -1,5 +1,6 @@
 import { Alert, Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { ADD_TO_CART, addToCartAction } from "../redux/action";
 
 const BookDetail = () =>
   // { bookSelected }
@@ -41,7 +42,8 @@ const BookDetail = () =>
                     onClick={() => {
                       // dispatch è la funzione presa dall'hook useDispatch (vedi sopra)
                       // che avvia il processo di cambio di stato, inviando l'oggetto (ACTION) che inseriamo come suo argomento
-                      dispatch({ type: "ADD_TO_CART", payload: bookSelected });
+                      // dispatch({ type: ADD_TO_CART, payload: bookSelected });
+                      dispatch(addToCartAction(bookSelected));
                     }}
                   >
                     ADD TO CART
