@@ -20,6 +20,19 @@ import bookSelectedReducer from "../reducers/bookSelectedReducer";
 import userReducer from "../reducers/userReducer";
 import booksReducer from "../reducers/booksReducer";
 import errorReducer from "../reducers/errorReducer";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
+import { encryptTransform } from "redux-persist-transform-encrypt";
+
+const persistConfig = {
+  key: "root",
+  storage,
+  transforms: [
+    encryptTransform({
+      secretKey: import.meta.env.VITE_PERSIST_KEY
+    })
+  ]
+};
 
 const rootReducer = combineReducers({
   cart: cartReducer,
@@ -29,14 +42,19 @@ const rootReducer = combineReducers({
   error: errorReducer
 });
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 // la funzione configureStore si occuperà di creare lo Store grazie al fatto che è già configurata per ritornare l'oggetto di Stato globale
 // la importiamo dal pacchetto reduxjs/toolkit e internamente avrà delle logiche aggiuntive rispetto ad un createStore usato in passato
 // configurerà anche i redux developer tools, oltre che a dei comodi "middlewares" per includere operazioni come fetch nel flusso redux
-const store = configureStore({
+export const store = configureStore({
   // dobbiamo fornire il nostro reducer associato alla proprietà reducer
   // reducer: mainReducer // Ora non abbiamo più un singolo reducer, ma più reducer che gestiscono ognuno la propria fetta (slice) di stato
   // che vengono riunificati in un unico oggetto nel rootReducer grazie anche a combineReducers()
-  reducer: rootReducer
+  // reducer: rootReducer
+  // siccome ora stiamo usando redux-persist useremo il suo reducer "aumentato"
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }) // spegne il fastidioso warning sui non serializable values
 });
 
-export default store;
+export const persistor = persistStore(store);

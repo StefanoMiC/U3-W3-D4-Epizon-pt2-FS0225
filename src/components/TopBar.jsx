@@ -9,6 +9,9 @@ const TopBar = () => {
   const hasError = useSelector(state => state.error.hasError);
   const errorMessage = useSelector(state => state.error.errorMessage);
 
+  // ricavare i dati dal file di environment (.env.local)
+  console.log("SECRET KEY", import.meta.env.VITE_PERSIST_KEY);
+  console.log("ANOTHER SECRET KEY", import.meta.env.VITE_ANOTHER_SECRET_INFO);
   return (
     <>
       {hasError && <Alert variant="danger">{errorMessage}</Alert>}
