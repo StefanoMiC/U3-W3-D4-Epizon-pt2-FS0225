@@ -1,4 +1,4 @@
-import { SELECT_BOOK, SET_USER } from "../action";
+import { SET_USER } from "../action";
 
 const initialState = {
   content: ""

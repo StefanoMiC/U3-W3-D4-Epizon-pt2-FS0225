@@ -17,6 +17,29 @@ export const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 
 // per poter far intendere alla arrow function che le nostre graffe sono di un dato da ritornare e non del suo contesto, mettiamo delle tonde all'esterno
 export const addToCartAction = book => ({ type: ADD_TO_CART, payload: book });
+
+export const addToCartActionThunk = bookToInsert => {
+  return (dispatch, getState) => {
+    const currentState = getState();
+    console.log(currentState);
+
+    const userName = currentState.user.content;
+
+    const foundBook = currentState.cart.content.find(currentBook => currentBook.id === bookToInsert.id);
+
+    console.log(foundBook ? "Libro già presente" : "Libro non presente, viene inserito");
+
+    if (!foundBook) {
+      dispatch({ type: ADD_TO_CART, payload: bookToInsert });
+    } else {
+      if (userName) {
+        alert(`${userName}, non ti ricordi di aver già inserito ${bookToInsert.title}?`);
+      } else {
+        alert(`il libro ${bookToInsert.title} è già inserito`);
+      }
+    }
+  };
+};
 export const removeFromCartAction = i => ({ type: REMOVE_FROM_CART, payload: i });
 export const setUserAction = str => ({ type: SET_USER, payload: str });
 export const selectBookAction = book => ({ type: SELECT_BOOK, payload: book });

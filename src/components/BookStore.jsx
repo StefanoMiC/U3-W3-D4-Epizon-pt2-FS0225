@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import BookList from "./BookList";
 import BookDetail from "./BookDetail";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getBooksAction } from "../redux/action";
 
 const BookStore = () => {
